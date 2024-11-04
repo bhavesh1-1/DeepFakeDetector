@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+  <title>Responsive Image Flexbox</title>
+  <style>
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Poppins', sans-serif;
+      background-image: url("{{ url_for('static', filename='bgimage/Image-BG.jpg') }}");
+      background-size: cover;
+      background-position: center;
+      overflow:hidden;
+    }
+  </style>
+</head>
+<body>
+  <div class="image-container">
+    <h1 class="heading-orange">DeepFake</h1>
+    <h1 class="heading-white">Detector</h1>
+    
+    <div class="button-container1">
+      <form class="p-3 text-center" action="/" method="post" enctype="multipart/form-data">
+        <input class="form-control" type="file" name="imagefile" accept="image/*">
+        <input class="btn btn-primary mt-3" type="submit" value="Predict image">
+      </form> 
+    
+    {% if prediction %}
+    <p class="text-center prediction-text">Image is a {{prediction}} {{confidence}} %</p>
+    {% endif %}
+    {% if image %}
+    <img src="data:image/jpeg;base64,{{ image }}" alt="Uploaded Image" id="reimg">
+    {% endif %}
+  </div>
+    {% if prediction_video %}
+    <p class="text-center prediction-text" >Video is {{ prediction_video }} with confidence {{ confidence_video }}%</p>
+    <video width="320" height="240" controls>
+      <source src="{{ video_path }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    {% endif %}
+
+    <div class="button-container2">
+      <form class="p-3 text-center" action="/" method="post" enctype="multipart/form-data">
+        <input type="file" id="file2" name="videofile" accept="video/*">
+        <input class="btn btn-primary mt-3" type="submit" value="Predict Video">
+      </form>
+    </div>
+    
+  </div>
+</body>
+</html>
